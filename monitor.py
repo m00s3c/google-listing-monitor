@@ -7,6 +7,7 @@ from datetime import datetime
 CONFIG_FILE = 'config.json'
 BASELINE_FILE = 'baseline.json'
 LAST_SEEN_FILE = 'last_seen.json'
+DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/your_webhook_here"
 
 def load_json(path):
     if os.path.exists(path):
@@ -42,11 +43,17 @@ def compare_data(label, place_id, baseline, current):
             }
     return changes
 
+def send_discord_alert(message, webhook_url):
+    try:
+        requests.post(webhook_url, json={"content": message})
+    except Exception as e:
+        print(f"[{datetime.now()}] ERROR sending webhook: {e}")
+
 def main():
     config = load_json(CONFIG_FILE)
     baseline = load_json(BASELINE_FILE)
     last_seen = {}
-    
+
     api_key = config.get("api_key")
     listings = config.get("listings", [])
     fields = config.get("fields_to_monitor", [])
@@ -71,9 +78,11 @@ def main():
 
         changes = compare_data(label, place_id, baseline_data, current_data)
         if changes:
-            print(f"[{datetime.now()}] ⚠️  Changes detected for {label} ({place_id}):")
+            message = f"🚨 Changes detected for **{label}** ({place_id}):\n"
             for field, val in changes.items():
-                print(f"  - {field}: expected '{val['expected']}', got '{val['actual']}'")
+                message += f"- **{field}**:\n    expected: `{val['expected']}`\n    actual:   `{val['actual']}`\n"
+            print(message)
+            send_discord_alert(message, DISCORD_WEBHOOK_URL)
         else:
             print(f"[{datetime.now()}] ✅ No changes for {label} ({place_id})")
 
