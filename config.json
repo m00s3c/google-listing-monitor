@@ -1,0 +1,20 @@
+{
+  "api_key": "YOUR_GOOGLE_API_KEY",
+  "listings": [
+    {
+      "place_id": "ChIJDummyPlaceID1",
+      "label": "Dummy Donuts"
+    },
+    {
+      "place_id": "ChIJDummyPlaceID2",
+      "label": "Testy Tech Repair"
+    }
+  ],
+  "fields_to_monitor": [
+    "formatted_phone_number",
+    "website",
+    "name",
+    "formatted_address"
+  ]
+}
+

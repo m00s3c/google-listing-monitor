@@ -1,0 +1,15 @@
+{
+  "ChIJDummyPlaceID1": {
+    "name": "Dummy Donuts",
+    "formatted_phone_number": "(123) 456-7890",
+    "website": "https://dummydonuts.example.com",
+    "formatted_address": "123 Fake St, Faketown, NY 10001, USA"
+  },
+  "ChIJDummyPlaceID2": {
+    "name": "Testy Tech Repair",
+    "formatted_phone_number": "(321) 654-0987",
+    "website": "https://testytech.example.com",
+    "formatted_address": "456 Mockingbird Ln, Nowhere, CA 90210, USA"
+  }
+}
+
